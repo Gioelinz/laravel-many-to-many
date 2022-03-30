@@ -30,15 +30,19 @@
                             <a href="{{ route('admin.posts.show', $post) }}">{{ $post->title }}</a>
                         </td>
                         <td>
-                            <span
-                                class="badge badge-pill badge-{{ $post->category->color ?? 'dark' }}">{!! $post->category->label ?? '<i class="fa-solid fa-ban"></i>' !!}
-                            </span>
+                            <h5>
+                                <span
+                                    class="badge badge-pill badge-{{ $post->category->color ?? 'dark' }}">{!! $post->category->label ?? '<i class="fa-solid fa-ban"></i>' !!}
+                                </span>
+                            </h5>
                         </td>
                         <td>
                             @forelse ($post->tags as $tag)
-                                <span class="badge"
-                                    style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
-                                </span>
+                                <h5>
+                                    <span class="badge"
+                                        style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
+                                    </span>
+                                </h5>
                             @empty
                                 <span class="badge badge-pill badge-dark">
                                     <i class="fa-solid fa-ban"></i>

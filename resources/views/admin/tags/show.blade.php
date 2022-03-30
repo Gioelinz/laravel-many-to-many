@@ -4,7 +4,7 @@
 @section('content')
     <div class="container">
         <div class="d-flex justify-content-end">
-            <a href="{{ URL::previous() }}" class="btn btn-secondary">Indietro</a>
+            <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Back</a>
         </div>
         <h2>All Posts from <strong>{{ $tag->label }}</strong> tag</h2>
         <table class="table">
@@ -14,6 +14,7 @@
                     <th scope="col">Title</th>
                     <th scope="col">Category</th>
                     <th scope="col">Last update</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -24,11 +25,17 @@
                         <td>{{ $post->title }}</td>
 
                         <td>
-                            <span
-                                class="badge badge-pill badge-{{ $post->category->color ?? 'dark' }}">{!! $post->category->label ?? '<i class="fa-solid fa-ban"></i>' !!}
-                            </span>
+                            <h5>
+                                <span
+                                    class="badge badge-pill badge-{{ $post->category->color ?? 'dark' }}">{!! $post->category->label ?? '<i class="fa-solid fa-ban"></i>' !!}
+                                </span>
+                            </h5>
                         </td>
                         <td>{{ date('F j Y g:i a', strtotime($post->updated_at)) }}</td>
+                        <td>
+                            <a class="text-danger" href="{{ route('admin.posts.show', $post) }}"><i
+                                    class="fa-solid fa-eye"></i></a>
+                        </td>
                     </tr>
                 @empty
                     <tr>
