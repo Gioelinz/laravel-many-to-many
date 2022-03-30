@@ -23,6 +23,7 @@ Route::middleware('auth')
     ->group(function () {
         Route::get('/', 'HomeController@index');
         Route::resource('/posts', 'PostController');
+        Route::resource('/tags', 'TagController');
     });
 
 Route::get('{any?}', function () {

@@ -65,7 +65,8 @@
             </tbody>
         </table>
         @forelse ($tags as $tag)
-            <a href="#" class="btn btn-dark mb-4">
+            <a href="{{ route('admin.tags.show', $tag) }}"
+                class="btn btn-dark mb-4 {{ !count($tag->posts) ? 'disabled' : '' }}">
                 {{ $tag->label }} <span class="badge badge-light">{{ count($tag->posts) }}</span>
             </a>
         @empty
