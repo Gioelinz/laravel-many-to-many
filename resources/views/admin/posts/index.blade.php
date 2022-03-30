@@ -44,9 +44,11 @@
                                     </span>
                                 </h5>
                             @empty
-                                <span class="badge badge-pill badge-dark">
-                                    <i class="fa-solid fa-ban"></i>
-                                </span>
+                                <h5>
+                                    <span class="badge badge-pill badge-dark">
+                                        <i class="fa-solid fa-ban"></i>
+                                    </span>
+                                </h5>
                             @endforelse
                         </td>
                         <td>{{ date('F j Y g:i a', strtotime($post->updated_at)) }}</td>
