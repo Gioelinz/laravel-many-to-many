@@ -51,7 +51,8 @@ class PostController extends Controller
                 'title' => 'required|string|unique:posts|min:5|max:255',
                 'image' => 'required|url|unique:posts',
                 'description' => 'required|string',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'nullable|exists:tags,id'
             ],
             [
                 'required' => 'Il campo :attribute è obbligatorio!',
@@ -68,6 +69,7 @@ class PostController extends Controller
 
         $post = Post::create($data);
 
+        if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
         return redirect()->route('admin.posts.index')->with('message', "$post->title creato con successo");
     }
@@ -92,7 +94,11 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+
+        $current_tags = $post->tags()->pluck('id')->toArray();
+
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'current_tags'));
     }
 
     /**
@@ -109,7 +115,8 @@ class PostController extends Controller
                 'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5', 'max:255'],
                 'image' => ['required', 'url', Rule::unique('posts')->ignore($post->id)],
                 'description' => 'required|string|min:5',
-                'category_id' => 'nullable|exists:categories,id'
+                'category_id' => 'nullable|exists:categories,id',
+                'tags' => 'nullable|exists:tags,id'
             ],
             [
                 'required' => 'Il campo :attribute è obbligatorio!',
@@ -125,6 +132,9 @@ class PostController extends Controller
         $data['slug'] = Str::slug($request->title, '-');
 
         $post->update($data);
+
+        if (array_key_exists('tags', $data)) $post->tags()->sync($data['tags']);
+        else $post->tags()->detach();
 
         return redirect()->route('admin.posts.index')->with('message', "$post->title modificato con successo");
     }
