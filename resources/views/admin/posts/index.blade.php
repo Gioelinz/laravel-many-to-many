@@ -40,7 +40,7 @@
                                     style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
                                 </span>
                             @empty
-                                <span class="badge badge-dark">
+                                <span class="badge badge-pill badge-dark">
                                     <i class="fa-solid fa-ban"></i>
                                 </span>
                             @endforelse
@@ -64,6 +64,12 @@
 
             </tbody>
         </table>
+        @forelse ($tags as $tag)
+            <a href="#" class="btn btn-dark mb-4">
+                {{ $tag->label }} <span class="badge badge-light">{{ count($tag->posts) }}</span>
+            </a>
+        @empty
+        @endforelse
         {{ $posts->links() }}
     </div>
 @endsection
