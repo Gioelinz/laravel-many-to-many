@@ -62,6 +62,21 @@
                 </div>
             @enderror
         </div>
+        <div class="col-12">
+            <hr>
+
+            @foreach ($tags as $tag)
+                <div class="custom-control custom-switch d-inline-block">
+                    <input type="checkbox" class="custom-control-input" id="tag-input-{{ $tag->id }}"
+                        value="{{ $tag->id }}" name="tags[]">
+                    <label class="custom-control-label mr-1"
+                        for="tag-input-{{ $tag->id }}">{{ $tag->label }}</label>
+                </div>
+            @endforeach
+
+
+            <hr>
+        </div>
     </div>
     <div class="controls d-flex justify-content-end mt-2">
         <a href="{{ route('admin.posts.index') }}" class="btn btn-primary mr-2">Indietro</a>

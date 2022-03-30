@@ -17,6 +17,7 @@
                     <th scope="col">#</th>
                     <th scope="col">Title</th>
                     <th scope="col">Category</th>
+                    <th scope="col">Tags</th>
                     <th scope="col">Last update</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -33,8 +34,19 @@
                                 class="badge badge-pill badge-{{ $post->category->color ?? 'dark' }}">{!! $post->category->label ?? '<i class="fa-solid fa-ban"></i>' !!}
                             </span>
                         </td>
+                        <td>
+                            @forelse ($post->tags as $tag)
+                                <span class="badge"
+                                    style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
+                                </span>
+                            @empty
+                                <span class="badge badge-dark">
+                                    <i class="fa-solid fa-ban"></i>
+                                </span>
+                            @endforelse
+                        </td>
                         <td>{{ date('F j Y g:i a', strtotime($post->updated_at)) }}</td>
-                        <td class="d-flex">
+                        <td class=" d-flex">
                             <a class="btn btn-warning mr-2" href="{{ route('admin.posts.edit', $post) }}"><i
                                     class="fa-solid fa-pencil"></i></a>
 

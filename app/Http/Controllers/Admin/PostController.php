@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -31,7 +32,9 @@ class PostController extends Controller
     {
         $post = new Post();
         $categories = Category::all();
-        return view('admin.posts.create', compact('post', 'categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.create', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -42,6 +45,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate(
             [
                 'title' => 'required|string|unique:posts|min:5|max:255',
@@ -63,6 +67,7 @@ class PostController extends Controller
         $data['slug'] = Str::slug($request->title, '-');
 
         $post = Post::create($data);
+
 
         return redirect()->route('admin.posts.index')->with('message', "$post->title creato con successo");
     }
