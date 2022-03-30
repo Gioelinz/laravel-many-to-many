@@ -38,7 +38,7 @@
                         </td>
                         <td>
                             @forelse ($post->tags as $tag)
-                                <h5>
+                                <h5 class="d-inline-block">
                                     <span class="badge"
                                         style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
                                     </span>
@@ -70,6 +70,13 @@
 
             </tbody>
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $posts->links() }}
+        </div>
+        <div class="mb-2">
+            <span class="h3">Tags</span>
+            <span><i class="fa-solid fa-arrow-turn-down fa-lg"></i></span>
+        </div>
         @forelse ($tags as $tag)
             <a href="{{ route('admin.tags.show', $tag) }}"
                 class="btn btn-dark mb-4 {{ !count($tag->posts) ? 'disabled' : '' }}">
@@ -77,6 +84,5 @@
             </a>
         @empty
         @endforelse
-        {{ $posts->links() }}
     </div>
 @endsection
