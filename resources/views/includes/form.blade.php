@@ -54,13 +54,20 @@
             @enderror
         </div>
         <div class="col-12">
-            <input type="text" class="form-control @error('image') is-invalid @enderror" placeholder="Url Immagine"
-                name="image" id="image" value="{{ old('image', $post->image) }}">
-            @error('image')
-                <div class="invalid-feedback">
-                    {{ $message }}
+            <div class="row align-items-center">
+                <div class="col-10">
+                    <input type="text" class="form-control @error('image') is-invalid @enderror"
+                        placeholder="Url Immagine" name="image" id="image" value="{{ old('image', $post->image) }}">
+                    @error('image')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
-            @enderror
+                <div class="col-2">
+                    <img class="img-fluid preview" src="" alt="Image not found" width="150" height="150">
+                </div>
+            </div>
         </div>
         <div class="col-12">
             <hr>
@@ -90,6 +97,7 @@
 </div>
 
 @section('scripts')
+    <script src="{{ asset('js/preview-url.js') }}"></script>
     <script>
         /* Validazione al keyup */
 
