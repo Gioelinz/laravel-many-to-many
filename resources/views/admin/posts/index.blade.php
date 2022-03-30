@@ -39,9 +39,9 @@
                         <td>
                             @forelse ($post->tags as $tag)
                                 <h5 class="d-inline-block">
-                                    <span class="badge"
+                                    <a href="{{ route('admin.tags.show', $tag) }}" class="badge badge-light"
                                         style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
-                                    </span>
+                                    </a>
                                 </h5>
                             @empty
                                 <h5>
