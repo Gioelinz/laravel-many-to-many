@@ -6,7 +6,8 @@
         <div class="d-flex justify-content-end">
             <a href="{{ route('admin.posts.index') }}" class="btn btn-secondary">Back</a>
         </div>
-        <h2>All Posts from <strong>{{ $tag->label }}</strong> tag</h2>
+        <h2>All Posts from <strong class="rounded px-2"
+                style="background-color: {{ $tag->color }}">{{ $tag->label }}</strong> tag</h2>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
