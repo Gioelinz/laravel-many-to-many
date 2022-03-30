@@ -61,6 +61,7 @@ class PostController extends Controller
                 'image.unique' => "Questa immagine è già stata inserita!",
                 'title.min' => "$request->title è lungo meno di 5 caratteri!",
                 'image.url' => "Inserisci un url valido!",
+                'tags.exists' => 'Il valore inserito nei :attribute non è valido!'
             ]
         );
 
@@ -124,7 +125,8 @@ class PostController extends Controller
                 'title.unique' => "Il Post $request->title è già esistente!",
                 'image.unique' => "Questa immagine è già stata inserita!",
                 'image.url' => "Inserisci un url valido!",
-                'title.min' => "$request->title è lungo meno di 5 caratteri!"
+                'title.min' => "$request->title è lungo meno di 5 caratteri!",
+                'tags.exists' => 'Il valore inserito non è valido!'
             ]
         );
 

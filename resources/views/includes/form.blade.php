@@ -64,15 +64,21 @@
         </div>
         <div class="col-12">
             <hr>
-
-            @foreach ($tags as $tag)
-                <div class="custom-control custom-switch d-inline-block">
-                    <input type="checkbox" class="custom-control-input" id="tag-input-{{ $tag->id }}"
-                        value="{{ $tag->id }}" name="tags[]" @if (in_array($tag->id, old('tags', $current_tags ?? []))) checked @endif>
-                    <label class="custom-control-label mr-1"
-                        for="tag-input-{{ $tag->id }}">{{ $tag->label }}</label>
+            <div class="@error('tags') is-invalid @enderror">
+                @foreach ($tags as $tag)
+                    <div class="custom-control custom-switch d-inline-block">
+                        <input type="checkbox" class="custom-control-input" id="tag-input-{{ $tag->id }}"
+                            value="{{ $tag->id }}" name="tags[]" @if (in_array($tag->id, old('tags', $current_tags ?? []))) checked @endif>
+                        <label class="custom-control-label mr-1"
+                            for="tag-input-{{ $tag->id }}">{{ $tag->label }}</label>
+                    </div>
+                @endforeach
+            </div>
+            @error('tags')
+                <div class="invalid-feedback">
+                    {{ $message }}
                 </div>
-            @endforeach
+            @enderror
             <hr>
         </div>
     </div>
