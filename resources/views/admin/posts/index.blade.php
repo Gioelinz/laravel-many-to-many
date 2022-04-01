@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
         @if (session('message'))
             <div class="alert alert-success">
@@ -39,7 +40,7 @@
                         <td>
                             @forelse ($post->tags as $tag)
                                 <h5 class="d-inline-block">
-                                    <a href="{{ route('admin.tags.show', $tag) }}" class="badge badge-light"
+                                    <a href="{{ route('admin.tags.show', $tag) }}" class="badge badge-dark"
                                         style="background-color: {{ $tag->color ?? '#000000' }}">{{ $tag->label }}
                                     </a>
                                 </h5>
