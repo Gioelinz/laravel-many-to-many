@@ -25,7 +25,7 @@ class PostSeeder extends Seeder
             $post->category_id = Arr::random($arr_category_id);
             $post->title = $faker->sentence(3);
             $post->description = $faker->paragraph(3);
-            $post->image = $faker->imageUrl(360, 360);
+            /* $post->image = $faker->imageUrl(360, 360); */
             $post->slug = Str::slug($post->title, '-');
             $post->save();
         }

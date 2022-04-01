@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\NewPostMail;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -79,6 +82,16 @@ class PostController extends Controller
 
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
+
+        // Email quando creo post
+        $mail = new NewPostMail($post);
+        $user = Auth::user();
+
+        Mail::to($user->email)->send($mail);
+
+
+
+
         return redirect()->route('admin.posts.index')->with('message', "$post->title creato con successo");
     }
 
@@ -121,7 +134,7 @@ class PostController extends Controller
         $request->validate(
             [
                 'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5', 'max:255'],
-                'image' => ['required', 'url', Rule::unique('posts')->ignore($post->id)],
+                'image' => 'nullable|image',
                 'description' => 'required|string|min:5',
                 'category_id' => 'nullable|exists:categories,id',
                 'tags' => 'nullable|exists:tags,id'
@@ -139,6 +152,12 @@ class PostController extends Controller
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->title, '-');
+        if (array_key_exists('image', $data)) {
+            if ($post->image) Storage::delete($post->image);
+
+            $img = Storage::put('post_imgs', $data['image']);
+            $data['image'] = $img;
+        }
 
         $post->update($data);
 
