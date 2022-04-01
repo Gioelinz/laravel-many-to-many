@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -50,7 +51,7 @@ class PostController extends Controller
         $request->validate(
             [
                 'title' => 'required|string|unique:posts|min:5|max:255',
-                'image' => 'required|url|unique:posts',
+                'image' => 'nullable|image',
                 'description' => 'required|string',
                 'category_id' => 'nullable|exists:categories,id',
                 'tags' => 'nullable|exists:tags,id'
@@ -68,6 +69,11 @@ class PostController extends Controller
         $data = $request->all();
 
         $data['slug'] = Str::slug($request->title, '-');
+
+        if (array_key_exists('image', $data)) {
+            $img = Storage::put('post_imgs', $data['image']);
+            $data['image'] = $img;
+        }
 
         $post = Post::create($data);
 

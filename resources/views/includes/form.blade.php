@@ -12,11 +12,11 @@
 
     @if ($post->exists)
         <h1>Modifica Post</h1>
-        <form action="{{ route('admin.posts.update', $post) }}" method="post">
+        <form action="{{ route('admin.posts.update', $post) }}" method="post" enctype="multipart/form-data">
             @method('PUT')
         @else
             <h1>Aggiungi un Post</h1>
-            <form action="{{ route('admin.posts.store') }}" method="post">
+            <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
     @endif
 
     @csrf
@@ -56,8 +56,11 @@
         <div class="col-12">
             <div class="row align-items-center">
                 <div class="col-10">
-                    <input type="text" class="form-control @error('image') is-invalid @enderror"
-                        placeholder="Url Immagine" name="image" id="image" value="{{ old('image', $post->image) }}">
+                    <label for="image">
+                        <span class="badge badge-primary">Carica Immagine</span>
+                    </label>
+                    <input type="file" class="form-control-file @error('image') is-invalid @enderror" name="image"
+                        id="image">
                     @error('image')
                         <div class="invalid-feedback">
                             {{ $message }}
