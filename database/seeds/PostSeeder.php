@@ -21,6 +21,9 @@ class PostSeeder extends Seeder
     {
         $arr_category_id = Category::pluck('id')->toArray();
 
+        //prendo tutti i tags id
+        $arr_tags_id = Tag::pluck('id')->toArray();
+
         for ($i = 0; $i < 20; $i++) {
             $post = new Post();
             $post->category_id = Arr::random($arr_category_id);
@@ -29,9 +32,6 @@ class PostSeeder extends Seeder
             $post->image = 'post_imgs/placeholder.png';
             $post->slug = Str::slug($post->title, '-');
             $post->save();
-
-            //prendo tutti i tags id
-            $arr_tags_id = Tag::pluck('id')->toArray();
 
             //popolo per ogni giro tag randomici
             $rand_tags = Arr::random($arr_tags_id, rand(1, 5));
